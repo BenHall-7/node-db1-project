@@ -8,14 +8,14 @@ const server = express();
 server.use(express.json());
 
 server.get("/accounts", (req, res) => {
-    db.select("*").from("accounts")
+    db("accounts").select("*")
         .then(res2 => {
             res.status(status.OK).json(res2);
         }).catch(err => {res.status(status.INTERNAL_SERVER_ERROR).json({error: "Error retrieving accounts"})})
 });
 
 server.get("/accounts/:id", (req, res) => {
-    db.select("*").from("accounts").where({id: req.params.id})
+    db("accounts").select("*").where({id: req.params.id})
         .then(res2 => {
             if (res2.length > 0) {
                 res.status(status.OK).json(res2[0]);
@@ -28,13 +28,13 @@ server.get("/accounts/:id", (req, res) => {
 });
 
 server.post("/accounts", checkAccountBody, (req, res) => {
-    db.insert(req.body).into("accounts")
+    db("accounts").insert(req.body)
         .then(res2 => {res.status(status.OK).json(res2[0]);})
         .catch(err => {res.status(status.intern)})
 });
 
 server.put("/accounts/:id", checkAccountBody, (req, res) => {
-    db.from("accounts").where({id: req.params.id}).update(req.body)
+    db("accounts").where({id: req.params.id}).update(req.body)
         .then(res2 => {
             if (res2) {
                 res.sendStatus(status.OK);
@@ -46,7 +46,7 @@ server.put("/accounts/:id", checkAccountBody, (req, res) => {
 });
 
 server.delete("/accounts/:id", (req, res) => {
-    db.from("accounts").where({id: req.params.id}).del()
+    db("accounts").where({id: req.params.id}).del()
         .then(res2 => {
             if (res2) {
                 res.sendStatus(status.OK);

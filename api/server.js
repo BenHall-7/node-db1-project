@@ -39,7 +39,7 @@ server.put("/accounts/:id", checkAccountBody, (req, res) => {
             if (res2) {
                 res.sendStatus(status.OK);
             } else {
-                res.status(status.BAD_REQUEST).json({error: "No account with that ID"});
+                res.status(status.NOT_FOUND).json({error: "Can't find account with that ID"});
             }
         })
         .catch(err => {res.status(status.INTERNAL_SERVER_ERROR).json({error: "Internal server error?"})})
@@ -51,7 +51,7 @@ server.delete("/accounts/:id", (req, res) => {
             if (res2) {
                 res.sendStatus(status.OK);
             } else {
-                res.status(status.BAD_REQUEST).json({error: "No account with that ID"});
+                res.status(status.NOT_FOUND).json({error: "Can't find account with that ID"});
             }
         })
         .catch(err => {res.status(status.INTERNAL_SERVER_ERROR).json({error: "Internal server error?"})})
